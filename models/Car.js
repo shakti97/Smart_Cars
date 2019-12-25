@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Joi = require("@hapi/joi");
 
 const carSchema = new mongoose.Schema({
+  type: mongoose.Schema.Types.ObjectId,
   name: {
     type: String,
     required
