@@ -1,35 +1,23 @@
-const { User, validate } = require("../../models/User");
+const { Business, validate } = require("../../../models/Accounts/Business");
 const router = require("express").Router();
 
 router.get("/", async (req, res) => {
   //check for authentication and add middleware
-  try {
-    const user = await User.find();
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-  return;
+  //get all business details
 });
 
 router.get("/:id", async (req, res) => {
   //check for authentication and add middleware
-  try {
-    const user = await User.find({
-      _id: req.params.id
-    });
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json(error);
-  }
+  //find business details by Id
 });
 
 router.put("/:id", async (req, res) => {
+  //check for authentication and add middleware
   const { error } = validateUserSchema(req.body);
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
-  //check for authentication and add middleware
+
   try {
     let user = await User.findById(req.params.id);
     if (!user) {

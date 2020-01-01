@@ -23,4 +23,4 @@ function validateRole(role) {
 }
 
 exports.Role = Role;
-exports.validateRole = validateRole;
+exports.validate = validateRole;

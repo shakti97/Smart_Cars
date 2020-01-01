@@ -4,8 +4,8 @@ const router = require("express").Router();
 router.get("/", async (req, res) => {
   //check for authentication and add middleware
   try {
-    const ride = await Ride.find();
-    res.status(200).json(ride);
+    const right = await Right.find();
+    res.status(200).json(right);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -15,10 +15,10 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   //check for authentication and add middleware
   try {
-    const ride = await Ride.find({
+    const right = await Right.find({
       _id: req.params.id
     });
-    res.status(200).json(ride);
+    res.status(200).json(right);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -31,23 +31,20 @@ router.put("/:id", async (req, res) => {
   }
   //check for authentication and add middleware
   try {
-    let ride = await Ride.findById(req.params.id);
-    if (!ride) {
-      res.status(404).send("The Ride with the given id is not found");
+    let right = await Right.findById(req.params.id);
+    if (!right) {
+      res.status(404).send("The Right with the given id is not found");
       return;
     }
-    const { source, destination, customer, driver, status } = req.body;
-    const updateRide = {
-      source,
-      destination,
-      customer,
-      driver,
+    const { routes, status } = req.body;
+    const updateRight = {
+      routes,
       status
     };
-    const ride = await Ride.findOneAndUpdate(req.params.id, updateRide);
+    const right = await Right.findOneAndUpdate(req.params.id, updateRight);
     res.status(200).json({
-      message: "Ride Successfully Updated",
-      data: ride
+      message: "Right Successfully Updated",
+      data: right
     });
   } catch (error) {
     res.status(500).json(error);
@@ -56,10 +53,10 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   //check for authentication and add middleware
-  const ride = await Ride.findByIdAndRemove(req.params.id);
-  if (!ride)
-    return res.status(404).send("The Ride with the given ID was not found.");
-  res.status(200).send(ride);
+  const right = await Right.findByIdAndRemove(req.params.id);
+  if (!right)
+    return res.status(404).send("The Right with the given ID was not found.");
+  res.status(200).send(right);
 });
 
 router.post("/", async (req, res) => {
@@ -69,18 +66,15 @@ router.post("/", async (req, res) => {
     return res.status(400).json(error.details[0].message);
   }
   try {
-    const { source, destination, customer, driver, status } = req.body;
-    const ride = new Ride({
-      source,
-      destination,
-      customer,
-      driver,
+    const { routes, status } = req.body;
+    const right = new Right({
+      routes,
       status
     });
 
-    await ride.save();
+    await right.save();
 
-    res.status(200).json(ride);
+    res.status(200).json(right);
   } catch (error) {
     res.status(500).json(error);
   }

@@ -40,7 +40,7 @@ function validateUserSchema(user) {
 
 function validateUserDetailSchema(userDetails) {
   const schema = Joi.object({
-    mobile_Number: Joi.number()
+    mobile_number: Joi.number()
       .max(10)
       .min(10),
     age: Joi.number(),
